@@ -15,7 +15,6 @@ function App() {
 }
 
 function HomePage() {
-    //return <div>TEST DIRECTION1</div>;
     TokenPage()
 }
 
@@ -26,8 +25,6 @@ function TokenPage() {
 
   useEffect(() => {
       console.log("useEffect triggered");
-
-      // Hash içinde query parametrelerini ayıklayın
       const hashParams = new URLSearchParams(location.hash.split('?')[1]);
       const eMail = hashParams.get('eMail');
       const token = hashParams.get('token');
@@ -37,7 +34,7 @@ function TokenPage() {
       if (token && eMail) {
           window.location.href = `http://localhost:50531/api/ear-technic/auth/reset-password?eMail=${eMail}&token=${token}`;
       } else {
-          setErrorMessage('Token or eMail not found in the URL.');
+          setErrorMessage('404 not found');
       }
   }, [location.hash]);
 
