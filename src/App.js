@@ -15,10 +15,11 @@ function App() {
 }
 
 function HomePage() {
-    return <div>TEST DIRECTION</div>;
+    return <div>TEST DIRECTION1</div>;
 }
 
 function TokenPage() {
+  console.log("TEST")
   const location = useLocation();
   const [errorMessage, setErrorMessage] = useState('');
 
