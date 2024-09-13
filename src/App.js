@@ -22,3 +22,4 @@ function TokenPage() {
       </div>
   );
 }
+export default App;
