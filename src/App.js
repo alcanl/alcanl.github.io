@@ -15,7 +15,8 @@ function App() {
 }
 
 function HomePage() {
-    return <div>TEST DIRECTION1</div>;
+    //return <div>TEST DIRECTION1</div>;
+    TokenPage()
 }
 
 function TokenPage() {
