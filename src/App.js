@@ -19,33 +19,31 @@ function HomePage() {
 }
 
 function TokenPage() {
-    const location = useLocation();
-    const [errorMessage, setErrorMessage] = useState('');
+  const location = useLocation();
+  const [errorMessage, setErrorMessage] = useState('');
 
-    useEffect(() => {
-        console.log("Current location:", location);
-        const queryParams = new URLSearchParams(location.search);
-        const eMail = queryParams.get('eMail');
-        const token = queryParams.get('token');
+  useEffect(() => {
+      console.log("useEffect triggered");
 
-        console.log("eMail:", eMail);
-        console.log("Token:", token);
+      // Hash içinde query parametrelerini ayıklayın
+      const hashParams = new URLSearchParams(location.hash.split('?')[1]);
+      const eMail = hashParams.get('eMail');
+      const token = hashParams.get('token');
 
-        if (token && eMail) {
-            // Yönlendirme yapıyoruz
-            console.log("test")
-            window.location.href = `http://localhost:50531/api/ear-technic/auth/reset-password?eMail=${eMail}&token=${token}`;
-        } else {
-            // Token veya eMail bulunamazsa hata mesajı gösteriyoruz
-            setErrorMessage('Token or eMail not found in the URL.');
-        }
-    }, [location.search]);
+      console.log("Hash Params:", { eMail, token });
 
-    return (
-        <div>
-            <p id="error-message">{errorMessage}</p>
-        </div>
-    );
+      if (token && eMail) {
+          window.location.href = `http://localhost:50531/api/ear-technic/auth/reset-password?eMail=${eMail}&token=${token}`;
+      } else {
+          setErrorMessage('Token or eMail not found in the URL.');
+      }
+  }, [location.hash]);
+
+  return (
+      <div>
+          <p id="error-message">{errorMessage}</p>
+      </div>
+  );
 }
 
 export default App;
