@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { HashRouter as Router, Route, Routes, useParams, useNavigate } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 
 function App() {
     return (
         <Router>
             <Routes>
-                <Route path="/:token" element={<TokenPage />} />
                 <Route path="/" element={<HomePage />} />
+                <Route path="*" element={<TokenPage />} />
             </Routes>
         </Router>
     );
@@ -17,19 +17,20 @@ function HomePage() {
 }
 
 function TokenPage() {
-    const { token } = useParams();  // URL'den token'ı al
-    const navigate = useNavigate();
+    const location = useLocation();
     const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
-        if (token) {
-            // Token varsa API'ye yönlendirme yap
-            window.location.href = `http://localhost:50531/api/ear-technic/auth/reset-password/${token}`;
+        const queryParams = new URLSearchParams(location.search);
+        const eMail = queryParams.get('eMail');
+        const token = queryParams.get('token');
+
+        if (token && eMail) {
+            window.location.href = `http://localhost:50531/api/ear-technic/auth/reset-password?eMail=${eMail}&token=${token}`;
         } else {
-            // Token yoksa hata mesajı göster
-            setErrorMessage('Token not found in the URL path.');
+            setErrorMessage('Token or eMail not found in the URL.');
         }
-    }, [token]);
+    }, [location.search]);
 
     return (
         <div>
