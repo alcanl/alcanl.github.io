@@ -14,20 +14,22 @@ function App() {
 }
 
 function HomePage() {
-    TokenPage(); 
+    return <div>Redirecting</div>;
 }
 
 function TokenPage() {
   console.log("TEST");
-  const location = useLocation();
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
       console.log("useEffect triggered");
 
-      const pathname = location.pathname;
-      console.log("Pathname:", pathname);
-      const token = pathname.substring(pathname.lastIndexOf('/') + 1);
+      // window.location.hash ile # sonrasını alıyoruz
+      const hash = window.location.hash;
+      console.log("Hash:", hash);
+
+      // Eğer hash varsa token kısmını ayıklıyoruz
+      const token = hash.substring(2); // #/ kısmını atlayarak token alınıyor
       console.log("Extracted token:", token);
 
       if (token) {
@@ -35,7 +37,7 @@ function TokenPage() {
       } else {
           setErrorMessage('404 not found');
       }
-  }, [location.pathname]);
+  }, []);
 
   return (
       <div>
