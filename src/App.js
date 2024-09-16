@@ -14,6 +14,7 @@ function App() {
 }
 
 function HomePage() {
+    TokenPage()
     return <div>Redirecting</div>;
 }
 
