@@ -14,7 +14,7 @@ function App() {
 
 function HomePage() {
     TokenPage()
-    return <div>Redirecting</div>;
+    return <div>Redirecting...</div>;
 }
 
 function TokenPage() {
@@ -22,18 +22,15 @@ function TokenPage() {
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-      console.log("useEffect triggered");
 
-      // window.location.hash ile # sonrasını alıyoruz
+      console.log("useEffect triggered");
       const hash = window.location.hash;
       console.log("Hash:", hash);
-
-      // Eğer hash varsa token kısmını ayıklıyoruz
-      const token = hash.substring(2); // #/ kısmını atlayarak token alınıyor
+      const token = hash.substring(2); 
       console.log("Extracted token:", token);
 
       if (token) {
-          window.location.href = `http://192.168.2.143:50531/api/ear-technic/auth/reset-password?token=${token}`;
+          window.location.href = `http://localhost:50531/api/ear-technic/auth/reset-password?token=${token}`;
       } else {
           setErrorMessage('404 not found');
       }
