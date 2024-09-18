@@ -17,8 +17,10 @@ function HomePage() {
     return <TokenPage />;
 }
 
+
 function TokenPage() {
   const [errorMessage, setErrorMessage] = useState('');
+  const [htmlErrorContent, setHtmlErrorContent] = useState('');
 
   useEffect(() => {
     console.log("useEffect triggered");
@@ -32,33 +34,54 @@ function TokenPage() {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json', 
-          'apiAuthKey': config.apiKey 
-        }
+          'apiAuthKey': config.apiKey
+        },
+        mode: 'cors'
       })
       .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
+        return response.text(); 
       })
       .then(data => {
         console.log("API response:", data);
+
+    
+        if (data.includes('<html')) {
+         
+          setHtmlErrorContent(data);
+        } else {
+    
+          const jsonData = JSON.parse(data);
+          console.log("JSON Data:", jsonData);
+
+    
+          if (jsonData.error) {
+            setErrorMessage(jsonData.error);
+          }
+        }
       })
       .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
-        setErrorMessage('404 not found');
+        setErrorMessage('There was an error with the request.');
       });
 
     } else {
-      setErrorMessage('404 not found');
+      setErrorMessage('Token not found in URL.');
     }
   }, []);
 
+
+  if (htmlErrorContent) {
+    return (
+      <div dangerouslySetInnerHTML={{ __html: htmlErrorContent }} />
+    );
+  }
+
   return (
     <div>
-      <p id="error-message">{errorMessage}</p>
+      {errorMessage && <p id="error-message">{errorMessage}</p>}
     </div>
   );
 }
 
 export default App;
+
