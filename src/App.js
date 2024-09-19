@@ -14,15 +14,8 @@ function App() {
 }
 
 function HomePage() {
-  return (
-    <div>
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Redirecting...</div>
-      <TokenPage />
-    </div>
-  );
+  return <TokenPage />;
 }
-
-
 
 function TokenPage() {
   const [errorMessage, setErrorMessage] = useState('');
