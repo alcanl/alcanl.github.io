@@ -14,11 +14,14 @@ function App() {
 }
 
 function HomePage() {
-    TokenPage();
-    return (
-      <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">Redirecting...</div>
-    );
+  return (
+    <div>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Redirecting...</div>
+      <TokenPage />
+    </div>
+  );
 }
+
 
 
 function TokenPage() {
