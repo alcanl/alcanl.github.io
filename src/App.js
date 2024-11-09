@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import config from './config';
 
 function App() {
-  console.log("App component loaded");
   return (
       <Router>
           <Routes>
@@ -22,11 +21,9 @@ function TokenPage() {
   const [htmlErrorContent, setHtmlErrorContent] = useState('');
 
   useEffect(() => {
-    console.log("useEffect triggered");
+    
     const hash = window.location.hash;
-    console.log("Hash:", hash);
     const token = hash.substring(2);  
-    console.log("Extracted token:", token);
 
     if (token) {
       fetch(`${config.apiUrl}?token=${token}`, {
@@ -41,18 +38,14 @@ function TokenPage() {
         return response.text(); 
       })
       .then(data => {
-        console.log("API response:", data);
-
-    
+       
         if (data.includes('<html')) {
          
           setHtmlErrorContent(data);
         } else {
     
           const jsonData = JSON.parse(data);
-          console.log("JSON Data:", jsonData);
 
-    
           if (jsonData.error) {
             setErrorMessage(jsonData.error);
           }
