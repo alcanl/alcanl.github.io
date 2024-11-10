@@ -33,18 +33,12 @@ function TokenPage() {
         },
         mode: 'cors',
       })
-      .then(response => response.text())
-      .then(data => {
-          const jsonData = JSON.parse(data);
-          if (jsonData.error) 
-            setErrorMessage(jsonData.error);
-          else if (jsonData.redirectUrl) {
-            console.log(jsonData.redirectUrl);
-            window.location.replace(jsonData.redirectUrl);
-          }
-            
-          
-        })
+      .then(response => {
+        if (response.redirected)
+          window.location.href = response.url;
+        else if (!response.ok)
+          setErrorMessage(response.json)
+      })
       .catch(error => {
         console.error('Error occurred while fetching the data:', error);
         setErrorMessage('An unknown error occurred, please try later.');
