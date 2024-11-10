@@ -39,7 +39,7 @@ function TokenPage() {
         else if (!response.ok)
           setErrorMessage(response.json)
         else {
-          response.text.then(data => {
+          response.text().then(data => {
             if (data.contains("<html>"))
               setHtmlErrorContent(data);
           })
