@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, redirect } from 'react-router-dom';
 import config from './config';
 
 function App() {
@@ -35,18 +35,16 @@ function TokenPage() {
       })
       .then(response => response.text())
       .then(data => {
-        if (data.includes('<html')) 
-          setHtmlErrorContent(data);
-         else {
-
           const jsonData = JSON.parse(data);
           if (jsonData.error) 
             setErrorMessage(jsonData.error);
-          else if (jsonData.redirectUrl) 
+          else if (jsonData.redirectUrl) {
+            console.log(jsonData.redirectUrl);
             window.location.replace(jsonData.redirectUrl);
+          }
+            
           
-        }
-      })
+        })
       .catch(error => {
         console.error('Error occurred while fetching the data:', error);
         setErrorMessage('An unknown error occurred, please try later.');
