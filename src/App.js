@@ -4,11 +4,11 @@ import config from './config';
 
 function App() {
   return (
-      <Router>
-          <Routes>
-              <Route path="/" element={<HomePage />} />
-          </Routes>
-      </Router>
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+      </Routes>
+    </Router>
   );
 }
 
@@ -21,46 +21,42 @@ function TokenPage() {
   const [htmlErrorContent, setHtmlErrorContent] = useState('');
 
   useEffect(() => {
-    
     const hash = window.location.hash;
-    const token = hash.substring(2);  
+    const token = hash.substring(2); // URL hash parametresinden token'ı al
 
     if (token) {
       fetch(`${config.apiUrl}?token=${token}`, {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json', 
-          'apiAuthKey': config.apiKey
+          'Content-Type': 'application/json',
+          'apiAuthKey': config.apiKey,
         },
-        mode: 'cors'
+        mode: 'cors',
       })
-      .then(response => {
-        return response.text(); 
-      })
+      .then(response => response.text())
       .then(data => {
-       
         if (data.includes('<html')) {
-         
+          // Eğer HTML içerik geldiyse hata mesajını göster
           setHtmlErrorContent(data);
         } else {
-    
+          // Gelen veri JSON ise ve bir redirect URL'si varsa
           const jsonData = JSON.parse(data);
-
           if (jsonData.error) {
             setErrorMessage(jsonData.error);
+          } else if (jsonData.redirectUrl) {
+            // Yönlendirme URL'si geldiyse, bunu window.location.href ile yönlendir
+            window.location.href = jsonData.redirectUrl;
           }
         }
       })
       .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
-        setErrorMessage('There was an error with the request.');
+        console.error('Fetch işlemi sırasında bir sorun oluştu:', error);
+        setErrorMessage('İstek sırasında bir hata oluştu.');
       });
-
     } else {
-      setErrorMessage('Token not found in URL.');
+      setErrorMessage('URL\'de token bulunamadı.');
     }
   }, []);
-
 
   if (htmlErrorContent) {
     return (
@@ -76,4 +72,3 @@ function TokenPage() {
 }
 
 export default App;
-
