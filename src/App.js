@@ -45,7 +45,7 @@ function TokenPage() {
             setErrorMessage(jsonData.error);
           } else if (jsonData.redirectUrl) {
             // Yönlendirme URL'si geldiyse, bunu window.location.href ile yönlendir
-            window.location.href = jsonData.redirectUrl;
+            window.location.replace = jsonData.redirectUrl;
           }
         }
       })
