@@ -40,7 +40,7 @@ function TokenPage() {
           setErrorMessage(response.text())
         else {
           response.text().then(data => {
-              console.log(data)
+            if (data.includes('<!DOCTYPE html>'))
               setHtmlErrorContent(data);
           })
         }
