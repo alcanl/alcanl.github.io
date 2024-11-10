@@ -38,6 +38,12 @@ function TokenPage() {
           window.location.href = response.url;
         else if (!response.ok)
           setErrorMessage(response.json)
+        else {
+          response.text.then(data => {
+            if (data.contains("<html>"))
+              setHtmlErrorContent(data);
+          })
+        }
       })
       .catch(error => {
         console.error('Error occurred while fetching the data:', error);
