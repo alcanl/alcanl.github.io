@@ -37,10 +37,10 @@ function TokenPage() {
         if (response.redirected)
           window.location.href = response.url;
         else if (!response.ok)
-          setErrorMessage(response.json)
+          setErrorMessage(response.text())
         else {
           response.text().then(data => {
-            if (data.includes("<html>"))
+            if (data.text().includes('<html'))
               setHtmlErrorContent(data);
           })
         }
