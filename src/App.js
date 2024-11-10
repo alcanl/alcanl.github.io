@@ -43,7 +43,7 @@ function TokenPage() {
           if (jsonData.error) 
             setErrorMessage(jsonData.error);
           else if (jsonData.redirectUrl) 
-            window.location.replace = jsonData.redirectUrl;
+            window.location.replace(jsonData.redirectUrl);
           
         }
       })
