@@ -22,7 +22,7 @@ function TokenPage() {
 
   useEffect(() => {
     const hash = window.location.hash;
-    const token = hash.substring(2); // URL hash parametresinden token'ı al
+    const token = hash.substring(2);
 
     if (token) {
       fetch(`${config.apiUrl}?token=${token}`, {
@@ -35,26 +35,24 @@ function TokenPage() {
       })
       .then(response => response.text())
       .then(data => {
-        if (data.includes('<html')) {
-          // Eğer HTML içerik geldiyse hata mesajını göster
+        if (data.includes('<html')) 
           setHtmlErrorContent(data);
-        } else {
-          // Gelen veri JSON ise ve bir redirect URL'si varsa
+         else {
+
           const jsonData = JSON.parse(data);
-          if (jsonData.error) {
+          if (jsonData.error) 
             setErrorMessage(jsonData.error);
-          } else if (jsonData.redirectUrl) {
-            // Yönlendirme URL'si geldiyse, bunu window.location.href ile yönlendir
+          else if (jsonData.redirectUrl) 
             window.location.replace = jsonData.redirectUrl;
-          }
+          
         }
       })
       .catch(error => {
-        console.error('Fetch işlemi sırasında bir sorun oluştu:', error);
-        setErrorMessage('İstek sırasında bir hata oluştu.');
+        console.error('Error occurred while fetching the data:', error);
+        setErrorMessage('An unknown error occurred, please try later.');
       });
     } else {
-      setErrorMessage('URL\'de token bulunamadı.');
+      setErrorMessage('Invalid try for password reset transaction.');
     }
   }, []);
 
